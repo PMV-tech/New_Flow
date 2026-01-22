@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberFlow - Sistema de Agendamento</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo-container">
+                <a href="index.html" class="logo">
+                    <div class="logo-placeholder">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <span class="logo-text">BarberFlow</span>
+                </a>
+            </div>
+            <div class="header-controls">
+                <button class="theme-toggle" id="themeToggle" aria-label="Mudar tema">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button class="lang-toggle" id="langToggle" aria-label="Mudar idioma">
+                    <span class="lang-text">EN</span>
+                </button>
+            </div>
+            <nav class="nav-desktop">
+                <a href="register.html" class="nav-link">Cadastre-se</a>
+                <a href="login.html" class="nav-link nav-btn">Entrar</a>
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="register.html" class="mobile-nav-link">Cadastre-se</a>
+            <a href="login.html" class="mobile-nav-link">Entrar</a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">BarberFlow</h1>
+                <h2 class="hero-subtitle">Sistema de Agendamento Inteligente para Barbearias</h2>
+                <p class="hero-description">
+                    O BarberFlow é uma plataforma completa desenvolvida para revolucionar a gestão de barbearias. 
+                    Oferecemos um sistema de agendamentos online, controle financeiro e organização de clientes, 
+                    tudo em um só lugar. Simplifique sua operação e foque no que realmente importa.
+                </p>
+                <div class="hero-buttons">
+                    <a href="register.html" class="btn btn-primary">Começar Agora</a>
+                    <a href="#features" class="btn btn-secondary">Saiba Mais</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title">Por que escolher o BarberFlow?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h3 class="feature-title">Agendamento 24/7</h3>
+                        <p class="feature-description">
+                            Seus clientes agendam horários a qualquer hora, sem confusões ou horários duplicados.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">Controle Financeiro</h3>
+                        <p class="feature-description">
+                            Acompanhe ganhos, despesas e lucro em tempo real. Tome decisões baseadas em dados.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="feature-title">Gestão de Clientes</h3>
+                        <p class="feature-description">
+                            Mantenha histórico completo de cada cliente, preferências e frequência de visitas.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Totalmente Responsivo</h3>
+                        <p class="feature-description">
+                            Acesse de qualquer dispositivo: celular, tablet ou computador. Seu negócio sempre acessível.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <div class="container">
+                <h2 class="section-title">Como Funciona?</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Cadastre-se</h3>
+                        <p class="step-description">
+                            Crie sua conta como barbeiro ou cliente em menos de 2 minutos.
+                        </p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">Configure</h3>
+                        <p class="step-description">
+                            Barbeiros: defina serviços, preços e horários de trabalho.
+                        </p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">Comece a Usar</h3>
+                        <p class="step-description">
+                            Agende serviços, gerencie seu fluxo e acompanhe seus resultados.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="container">
+                <h2 class="cta-title">Pronto para transformar sua barbearia?</h2>
+                <p class="cta-description">
+                    Junte-se a barbearias que já otimizaram sua gestão com o BarberFlow.
+                </p>
+                <a href="register.html" class="btn btn-primary btn-large">Cadastre-se Gratuitamente</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo-placeholder">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <span class="logo-text">BarberFlow</span>
+                </div>
+                <p class="footer-tagline">Tecnologia que move negócios</p>
+                <p class="footer-copyright">
+                    &copy; 2024 BarberFlow. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
