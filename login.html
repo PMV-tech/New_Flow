@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberFlow - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-page">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="logo-placeholder">
+                    <i class="fas fa-cut"></i>
+                </div>
+                <h1 class="auth-title">BarberFlow</h1>
+                <p class="auth-subtitle">Acesse sua conta</p>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="loginEmail">E-mail</label>
+                    <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Senha</label>
+                    <input type="password" id="loginPassword" placeholder="Sua senha" required>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">Lembrar de mim</label>
+                    <div class="remember-info">
+                        <i class="fas fa-info-circle"></i>
+                        Se marcado, seu email será lembrado neste dispositivo
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block">Acessar Conta</button>
+                </div>
+
+                <div class="auth-links">
+                    <a href="register.html">Não tem uma conta? Cadastre-se</a>
+                    <a href="index.html"><i class="fas fa-arrow-left"></i> Voltar para Home</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
