@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberFlow - Gastos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="logo">
+                    <div class="logo-placeholder">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <span class="logo-text">BarberFlow</span>
+                </a>
+                <button class="close-sidebar" id="closeSidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <h3 id="userName">Usuário</h3>
+                        <span id="userRole">Carregando...</span>
+                    </div>
+                </div>
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Principal</h4>
+                    <a href="dashboard.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Agendamentos</h4>
+                    <a href="appointments.html" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Agendamentos</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section" id="barberSection">
+                    <h4 class="nav-section-title">Financeiro</h4>
+                    <a href="reports.html" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Relatórios</span>
+                    </a>
+                    <a href="gastos.html" class="nav-link active">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Gastos</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Conta</h4>
+                    <a href="logout.html" class="nav-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Sair</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Controle de Gastos</h1>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                    <button class="lang-toggle" id="langToggle">
+                        <span class="lang-text">EN</span>
+                    </button>
+                    <button class="user-dropdown-toggle">
+                        <div class="user-avatar-small">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span id="userNameSmall">Usuário</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="expense-form">
+                <h3>Adicionar Novo Gasto</h3>
+                <div class="form-row-inline">
+                    <div class="form-group">
+                        <label for="expenseName">Nome do Gasto</label>
+                        <input type="text" id="expenseName" placeholder="Ex: Aluguel, Produtos, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseAmount">Valor (R$)</label>
+                        <input type="number" id="expenseAmount" placeholder="0,00" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseCategory">Categoria</label>
+                        <select id="expenseCategory">
+                            <option value="fixo">Fixo</option>
+                            <option value="variavel">Variável</option>
+                            <option value="investimento">Investimento</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="addExpense()">Adicionar</button>
+                </div>
+            </div>
+
+            <div class="expenses-list">
+                <h3>Gastos Mensais</h3>
+                <div id="expensesContainer">
+                    <!-- Gastos serão carregados aqui -->
+                    <p>Nenhum gasto registrado.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+            loadExpenses();
+        });
+        
+        function loadUserInfo() {
+            const user = JSON.parse(localStorage.getItem('barberflow-user') || '{}');
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userNameSmall').textContent = user.name;
+            }
+        }
+        
+        function loadExpenses() {
+            const expenses = JSON.parse(localStorage.getItem('barberflow-expenses') || '[]');
+            const container = document.getElementById('expensesContainer');
+            
+            if (expenses.length === 0) {
+                container.innerHTML = '<p>Nenhum gasto registrado.</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            expenses.forEach(expense => {
+                const item = document.createElement('div');
+                item.className = 'expense-item';
+                item.innerHTML = `
+                    <div class="expense-info">
+                        <h4>${expense.name}</h4>
+                        <span class="expense-date">${expense.category}</span>
+                    </div>
+                    <div class="expense-amount">R$ ${expense.amount.toFixed(2)}</div>
+                    <div class="expense-actions">
+                        <button class="btn btn-danger btn-sm" onclick="deleteExpense(${expense.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+        
+        function addExpense() {
+            const name = document.getElementById('expenseName').value.trim();
+            const amount = parseFloat(document.getElementById('expenseAmount').value);
+            const category = document.getElementById('expenseCategory').value;
+            
+            if (!name || isNaN(amount) || amount <= 0) {
+                alert('Preencha todos os campos corretamente');
+                return;
+            }
+            
+            const expenses = JSON.parse(localStorage.getItem('barberflow-expenses') || '[]');
+            const newExpense = {
+                id: Date.now(),
+                name: name,
+                amount: amount,
+                category: category,
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            expenses.push(newExpense);
+            localStorage.setItem('barberflow-expenses', JSON.stringify(expenses));
+            
+            // Limpar formulário
+            document.getElementById('expenseName').value = '';
+            document.getElementById('expenseAmount').value = '';
+            
+            // Recarregar lista
+            loadExpenses();
+            alert('Gasto adicionado com sucesso!');
+        }
+        
+        function deleteExpense(id) {
+            if (confirm('Excluir este gasto?')) {
+                let expenses = JSON.parse(localStorage.getItem('barberflow-expenses') || '[]');
+                expenses = expenses.filter(exp => exp.id !== id);
+                localStorage.setItem('barberflow-expenses', JSON.stringify(expenses));
+                loadExpenses();
+            }
+        }
+    </script>
+</body>
+</html>
