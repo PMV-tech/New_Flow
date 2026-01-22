@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberFlow - Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-page">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="logo-placeholder">
+                    <i class="fas fa-cut"></i>
+                </div>
+                <h1 class="auth-title">BarberFlow</h1>
+                <p class="auth-subtitle">Crie sua conta</p>
+            </div>
+
+            <form id="registerForm" class="auth-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">Nome *</label>
+                        <input type="text" id="firstName" placeholder="Seu nome" required>
+                        <span class="error-message" id="firstNameError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Sobrenome *</label>
+                        <input type="text" id="lastName" placeholder="Seu sobrenome" required>
+                        <span class="error-message" id="lastNameError"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail *</label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Telefone</label>
+                    <input type="tel" id="phone" placeholder="(11) 99999-9999">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Senha *</label>
+                    <input type="password" id="password" placeholder="Mínimo 8 caracteres" required>
+                    <div class="password-requirements">
+                        <span id="reqLength" class="req-item">Mínimo 8 caracteres</span>
+                        <span id="reqUppercase" class="req-item">1 letra maiúscula</span>
+                        <span id="reqNumber" class="req-item">1 número</span>
+                        <span id="reqSymbol" class="req-item">1 símbolo especial</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmar Senha *</label>
+                    <input type="password" id="confirmPassword" placeholder="Repita a senha" required>
+                    <span class="error-message" id="confirmPasswordError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="accountType">Tipo de Conta *</label>
+                    <select id="accountType" required>
+                        <option value="">Selecione...</option>
+                        <option value="client">Cliente</option>
+                        <option value="barber">Barbeiro</option>
+                    </select>
+                    <div class="account-type-info">
+                        Clientes podem agendar serviços. Barbeiros podem aceitar agendamentos.
+                    </div>
+                </div>
+
+                <div class="terms-group">
+                    <div class="terms-box">
+                        <h4>Termos de Uso</h4>
+                        <p>Ao criar uma conta no BarberFlow, você concorda com nossos termos de uso...</p>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">Concordo com os Termos de Uso e Política de Privacidade</label>
+                        <span class="error-message" id="termsError"></span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block">Criar Conta</button>
+                </div>
+
+                <div class="auth-links">
+                    <a href="login.html">Já tem uma conta? Faça login</a>
+                    <a href="index.html"><i class="fas fa-arrow-left"></i> Voltar para Home</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
