@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberFlow - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="logo">
+                    <div class="logo-placeholder">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <span class="logo-text">BarberFlow</span>
+                </a>
+                <button class="close-sidebar" id="closeSidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <h3 id="userName">Usuário</h3>
+                        <span id="userRole">Carregando...</span>
+                    </div>
+                </div>
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Principal</h4>
+                    <a href="dashboard.html" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Agendamentos</h4>
+                    <a href="appointments.html" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Agendamentos</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section" id="barberSection">
+                    <h4 class="nav-section-title">Financeiro</h4>
+                    <a href="reports.html" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Relatórios</span>
+                    </a>
+                    <a href="gastos.html" class="nav-link">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Gastos</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Conta</h4>
+                    <a href="logout.html" class="nav-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Sair</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                    <button class="lang-toggle" id="langToggle">
+                        <span class="lang-text">EN</span>
+                    </button>
+                    <button class="user-dropdown-toggle">
+                        <div class="user-avatar-small">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span id="userNameSmall">Usuário</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3 class="stat-title">Agendamentos Hoje</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="todayApps">0</div>
+                    <div class="stat-change positive">+0% vs ontem</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3 class="stat-title">Agendamentos Pendentes</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="pendingApps">0</div>
+                    <div class="stat-change">Aguardando confirmação</div>
+                </div>
+                
+                <div class="stat-card" id="revenueCard">
+                    <div class="stat-header">
+                        <h3 class="stat-title">Receita do Mês</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="monthRevenue">R$ 0,00</div>
+                    <div class="stat-change positive">+0% vs mês passado</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3 class="stat-title">Clientes Ativos</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="activeClients">0</div>
+                    <div class="stat-change positive">+0% este mês</div>
+                </div>
+            </div>
+
+            <div class="recent-activity">
+                <h2 class="section-title">Próximos Agendamentos</h2>
+                <div class="activity-list" id="upcomingApps">
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4 class="activity-title">Nenhum agendamento</h4>
+                            <p class="activity-time">Agende seu primeiro serviço</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-activity">
+                <h2 class="section-title">Atividade Recente</h2>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4 class="activity-title">Conta criada</h4>
+                            <p class="activity-time">Hoje</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Inicializar dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+            loadDashboardData();
+            
+            // Preencher email lembrado se existir
+            const rememberedEmail = localStorage.getItem('barberflow-remembered-email');
+            if (rememberedEmail && document.getElementById('loginEmail')) {
+                document.getElementById('loginEmail').value = rememberedEmail;
+            }
+        });
+        
+        function loadUserInfo() {
+            const user = JSON.parse(localStorage.getItem('barberflow-user') || '{}');
+            const accountType = localStorage.getItem('barberflow-account-type');
+            
+            if (user) {
+                document.getElementById('userName').textContent = user.name || 'Usuário';
+                document.getElementById('userNameSmall').textContent = user.name || 'Usuário';
+                document.getElementById('userRole').textContent = accountType === 'barber' ? 'Barbeiro' : 'Cliente';
+                
+                // Esconder seções para clientes
+                if (accountType === 'client') {
+                    document.getElementById('barberSection').style.display = 'none';
+                    document.getElementById('revenueCard').style.display = 'none';
+                }
+            }
+        }
+        
+        function loadDashboardData() {
+            // Simular dados do dashboard
+            document.getElementById('todayApps').textContent = '2';
+            document.getElementById('pendingApps').textContent = '1';
+            
+            const accountType = localStorage.getItem('barberflow-account-type');
+            if (accountType === 'barber') {
+                document.getElementById('monthRevenue').textContent = 'R$ 1.250,00';
+            }
+            
+            document.getElementById('activeClients').textContent = '5';
+        }
+    </script>
+</body>
+</html>
