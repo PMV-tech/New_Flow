@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberFlow - Agendamentos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="logo">
+                    <div class="logo-placeholder">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <span class="logo-text">BarberFlow</span>
+                </a>
+                <button class="close-sidebar" id="closeSidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <h3 id="userName">Usuário</h3>
+                        <span id="userRole">Carregando...</span>
+                    </div>
+                </div>
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Principal</h4>
+                    <a href="dashboard.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Agendamentos</h4>
+                    <a href="appointments.html" class="nav-link active">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Agendamentos</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section" id="barberSection">
+                    <h4 class="nav-section-title">Financeiro</h4>
+                    <a href="reports.html" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Relatórios</span>
+                    </a>
+                    <a href="gastos.html" class="nav-link">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Gastos</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Conta</h4>
+                    <a href="logout.html" class="nav-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Sair</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Agendamentos</h1>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                    <button class="lang-toggle" id="langToggle">
+                        <span class="lang-text">EN</span>
+                    </button>
+                    <button class="user-dropdown-toggle">
+                        <div class="user-avatar-small">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span id="userNameSmall">Usuário</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Novo Agendamento (Clientes) -->
+            <div id="clientSection" style="display: none;">
+                <div class="appointment-form">
+                    <h2>Novo Agendamento</h2>
+                    <div class="form-group">
+                        <label>Serviço</label>
+                        <select id="serviceType">
+                            <option value="corte">Corte de Cabelo - R$ 35</option>
+                            <option value="barba">Corte de Barba - R$ 25</option>
+                            <option value="completo">Corte Completo - R$ 55</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Data</label>
+                        <input type="date" id="appointmentDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Horário</label>
+                        <select id="appointmentTime">
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="createAppointment()">Agendar</button>
+                </div>
+            </div>
+
+            <!-- Lista de Agendamentos -->
+            <div class="appointments-grid" id="appointmentsList">
+                <!-- Agendamentos serão carregados aqui -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+            loadAppointments();
+            
+            const accountType = localStorage.getItem('barberflow-account-type');
+            if (accountType === 'client') {
+                document.getElementById('clientSection').style.display = 'block';
+                document.getElementById('barberSection').style.display = 'none';
+            }
+        });
+        
+        function loadUserInfo() {
+            const user = JSON.parse(localStorage.getItem('barberflow-user') || '{}');
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userNameSmall').textContent = user.name;
+            }
+        }
+        
+        function loadAppointments() {
+            const appointments = JSON.parse(localStorage.getItem('barberflow-appointments') || '[]');
+            const container = document.getElementById('appointmentsList');
+            
+            if (appointments.length === 0) {
+                container.innerHTML = '<p>Nenhum agendamento encontrado.</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            appointments.forEach(apt => {
+                const card = document.createElement('div');
+                card.className = 'appointment-card';
+                card.innerHTML = `
+                    <div class="appointment-header">
+                        <span class="appointment-status status-${apt.status}">
+                            ${apt.status === 'pending' ? 'Pendente' : 'Confirmado'}
+                        </span>
+                        <span class="appointment-date">${apt.date} às ${apt.time}</span>
+                    </div>
+                    <div class="appointment-service">
+                        <div class="service-name">${apt.service}</div>
+                        <div class="service-price">${apt.price}</div>
+                    </div>
+                    <div class="appointment-actions">
+                        ${apt.status === 'pending' ? `
+                            <button class="btn btn-danger" onclick="cancelAppointment(${apt.id})">Cancelar</button>
+                        ` : ''}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function createAppointment() {
+            const service = document.getElementById('serviceType').value;
+            const date = document.getElementById('appointmentDate').value;
+            const time = document.getElementById('appointmentTime').value;
+            
+            if (!service || !date || !time) {
+                alert('Preencha todos os campos');
+                return;
+            }
+            
+            const appointments = JSON.parse(localStorage.getItem('barberflow-appointments') || '[]');
+            const newAppointment = {
+                id: Date.now(),
+                service: service,
+                date: date,
+                time: time,
+                status: 'pending',
+                price: getServicePrice(service)
+            };
+            
+            appointments.push(newAppointment);
+            localStorage.setItem('barberflow-appointments', JSON.stringify(appointments));
+            
+            alert('Agendamento criado com sucesso!');
+            loadAppointments();
+        }
+        
+        function getServicePrice(service) {
+            const prices = {
+                'corte': 'R$ 35,00',
+                'barba': 'R$ 25,00',
+                'completo': 'R$ 55,00'
+            };
+            return prices[service] || 'R$ 0,00';
+        }
+        
+        function cancelAppointment(id) {
+            if (confirm('Cancelar este agendamento?')) {
+                let appointments = JSON.parse(localStorage.getItem('barberflow-appointments') || '[]');
+                appointments = appointments.filter(apt => apt.id !== id);
+                localStorage.setItem('barberflow-appointments', JSON.stringify(appointments));
+                loadAppointments();
+            }
+        }
+    </script>
+</body>
+</html>
