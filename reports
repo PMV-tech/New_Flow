@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberFlow - Relatórios</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="logo">
+                    <div class="logo-placeholder">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <span class="logo-text">BarberFlow</span>
+                </a>
+                <button class="close-sidebar" id="closeSidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <h3 id="userName">Usuário</h3>
+                        <span id="userRole">Carregando...</span>
+                    </div>
+                </div>
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Principal</h4>
+                    <a href="dashboard.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Agendamentos</h4>
+                    <a href="appointments.html" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Agendamentos</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section" id="barberSection">
+                    <h4 class="nav-section-title">Financeiro</h4>
+                    <a href="reports.html" class="nav-link active">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Relatórios</span>
+                    </a>
+                    <a href="gastos.html" class="nav-link">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Gastos</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Conta</h4>
+                    <a href="logout.html" class="nav-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Sair</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Relatórios Financeiros</h1>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                    <button class="lang-toggle" id="langToggle">
+                        <span class="lang-text">EN</span>
+                    </button>
+                    <button class="user-dropdown-toggle">
+                        <div class="user-avatar-small">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span id="userNameSmall">Usuário</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="reports-grid">
+                <div class="summary-card">
+                    <div class="summary-value" id="totalRevenue">R$ 0,00</div>
+                    <div class="summary-label">Receita Total</div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-value" id="totalExpenses">R$ 0,00</div>
+                    <div class="summary-label">Gastos Totais</div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-value" id="netProfit">R$ 0,00</div>
+                    <div class="summary-label">Lucro Líquido</div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-value" id="profitMargin">0%</div>
+                    <div class="summary-label">Margem de Lucro</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>Resumo Mensal</h3>
+                <p id="reportSummary">Carregando dados...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+            loadReports();
+        });
+        
+        function loadUserInfo() {
+            const user = JSON.parse(localStorage.getItem('barberflow-user') || '{}');
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userNameSmall').textContent = user.name;
+            }
+        }
+        
+        function loadReports() {
+            const appointments = JSON.parse(localStorage.getItem('barberflow-appointments') || '[]');
+            const expenses = JSON.parse(localStorage.getItem('barberflow-expenses') || '[]');
+            
+            // Calcular receita (apenas agendamentos confirmados)
+            const revenue = appointments
+                .filter(apt => apt.status === 'confirmed')
+                .reduce((sum, apt) => {
+                    const price = parseFloat(apt.price?.replace('R$ ', '').replace(',', '.')) || 0;
+                    return sum + price;
+                }, 0);
+            
+            // Calcular gastos
+            const expensesTotal = expenses.reduce((sum, exp) => sum + (exp.amount || 0), 0);
+            
+            // Calcular lucro
+            const profit = revenue - expensesTotal;
+            const margin = revenue > 0 ? (profit / revenue * 100).toFixed(1) : 0;
+            
+            // Atualizar UI
+            document.getElementById('totalRevenue').textContent = `R$ ${revenue.toFixed(2)}`;
+            document.getElementById('totalExpenses').textContent = `R$ ${expensesTotal.toFixed(2)}`;
+            document.getElementById('netProfit').textContent = `R$ ${profit.toFixed(2)}`;
+            document.getElementById('profitMargin').textContent = `${margin}%`;
+            
+            const summary = document.getElementById('reportSummary');
+            if (profit > 0) {
+                summary.innerHTML = `<span style="color: var(--success-color);">✓ Lucro positivo este mês</span>`;
+            } else if (profit < 0) {
+                summary.innerHTML = `<span style="color: var(--danger-color);">⚠ Prejuízo este mês</span>`;
+            } else {
+                summary.textContent = 'Empatado este mês';
+            }
+        }
+    </script>
+</body>
+</html>
